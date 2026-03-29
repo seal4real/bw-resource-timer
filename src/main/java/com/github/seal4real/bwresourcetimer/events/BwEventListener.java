@@ -1,5 +1,7 @@
 package com.github.seal4real.bwresourcetimer.events;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -27,9 +29,21 @@ public class BwEventListener {
     }
 
     @SubscribeEvent
-    public void chat(ClientChatReceivedEvent event) {
+    public void onChat(ClientChatReceivedEvent event) {
         String msg = event.message.getUnformattedText();
-        System.out.println("CHAT: " + msg);
+
+        if (msg.startsWith("{")) {  // /locraw responses are JSON
+            event.setCanceled(true); // hide it from chat
+
+            JsonObject json = new JsonParser().parse(msg).getAsJsonObject();
+
+            if (json.has("gametype")) {
+                String gameType = json.get("gametype").getAsString();
+                String mode = json.has("mode") ? json.get("mode").getAsString() : "unknown";
+                System.out.println("Game type: " + gameType);
+                System.out.println("Mode: " + mode);
+            }
+        }
     }
 
 }
