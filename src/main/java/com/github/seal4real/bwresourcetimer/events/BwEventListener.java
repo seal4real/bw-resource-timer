@@ -1,5 +1,6 @@
 package com.github.seal4real.bwresourcetimer.events;
 
+import com.github.seal4real.bwresourcetimer.game.GameState;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
@@ -14,6 +15,10 @@ public class BwEventListener {
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event) {
         ticks = 20; // wait 1 second (20 ticks) before sending /locraw
+
+        // Reset GameState
+        GameState.inBedwars = false;
+        GameState.mode = null;
     }
 
     @SubscribeEvent
@@ -40,6 +45,10 @@ public class BwEventListener {
             if (json.has("gametype")) {
                 String gameType = json.get("gametype").getAsString();
                 String mode = json.has("mode") ? json.get("mode").getAsString() : "unknown";
+
+                GameState.inBedwars = gameType.equals("BEDWARS");
+                GameState.mode = mode;
+
                 System.out.println("Game type: " + gameType);
                 System.out.println("Mode: " + mode);
             }
