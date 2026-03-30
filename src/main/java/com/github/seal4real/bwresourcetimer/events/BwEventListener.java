@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class BwEventListener {
     int ticks = -1;
-    boolean printed = false;
 
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event) {

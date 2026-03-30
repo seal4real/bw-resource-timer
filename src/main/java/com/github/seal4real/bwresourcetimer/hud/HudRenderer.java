@@ -1,6 +1,7 @@
 package com.github.seal4real.bwresourcetimer.hud;
 
 import com.github.seal4real.bwresourcetimer.game.GameState;
+import com.github.seal4real.bwresourcetimer.game.ResourceTimers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -16,11 +17,15 @@ public class HudRenderer {
         if (GameState.gameStartTime < 0) return;
 
         long elapsed = GameState.getElapsedSeconds();
-        long minutes = elapsed / 60;
-        long seconds = elapsed % 60;
-        String text = String.format("Game: %02d:%02d", minutes, seconds);
+
+        long diamondSecs = ResourceTimers.secondsUntilNextSpawn(ResourceTimers.DIAMOND_TIERS, elapsed);
+        long emeraldSecs = ResourceTimers.secondsUntilNextSpawn(ResourceTimers.EMERALD_TIERS, elapsed);
+
+        String diamondText = String.format("Diamonds: %d:%02d", diamondSecs / 60, diamondSecs % 60);
+        String emeraldText = String.format("Emeralds: %d:%02d", emeraldSecs / 60, emeraldSecs % 60);
 
         FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
-        fr.drawStringWithShadow(text, X, Y, 0xFFFFFF);
+        fr.drawStringWithShadow(diamondText, X, Y,      0x55FFFF);
+        fr.drawStringWithShadow(emeraldText, X, Y + 10, 0x55FF55);
     }
 }
