@@ -21,11 +21,12 @@ public class HudRenderer {
         long diamondSecs = ResourceTimers.secondsUntilNextSpawn(ResourceTimers.DIAMOND_TIERS, elapsed);
         long emeraldSecs = ResourceTimers.secondsUntilNextSpawn(ResourceTimers.EMERALD_TIERS, elapsed);
 
-        String diamondText = String.format("Diamonds: %d:%02d", diamondSecs / 60, diamondSecs % 60);
-        String emeraldText = String.format("Emeralds: %d:%02d", emeraldSecs / 60, emeraldSecs % 60);
+        // §b = aqua, §a = green, §f = white
+        String diamondText = "\u00a7bDiamonds: \u00a7f" + String.format("%d:%02d", diamondSecs / 60, diamondSecs % 60);
+        String emeraldText = "\u00a7aEmeralds: \u00a7f" + String.format("%d:%02d", emeraldSecs / 60, emeraldSecs % 60);
 
         FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
-        fr.drawStringWithShadow(diamondText, X, Y,      0x55FFFF);
-        fr.drawStringWithShadow(emeraldText, X, Y + 10, 0x55FF55);
+        fr.drawStringWithShadow(diamondText, X, Y,      0xFFFFFF);
+        fr.drawStringWithShadow(emeraldText, X, Y + 10, 0xFFFFFF);
     }
 }
