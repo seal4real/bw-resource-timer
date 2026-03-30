@@ -1,6 +1,7 @@
 package com.github.seal4real.bwresourcetimer.events;
 
 import com.github.seal4real.bwresourcetimer.game.GameState;
+import java.util.Collection;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
@@ -37,31 +38,33 @@ public class BwEventListener {
             ticks = -1;
         }
 
-        if (!printed) {
+        if (!printed && Minecraft.getMinecraft().theWorld != null) {
             Scoreboard sb = Minecraft.getMinecraft().theWorld.getScoreboard();
             ScoreObjective obj = sb.getObjectiveInDisplaySlot(1); // sidebar
 
             if (obj != null) {
-                System.out.println("=== SIDEBAR DEBUG ===");
-                System.out.println("TITLE: " + obj.getDisplayName());
-                System.out.println();
+                Collection<Score> scores = sb.getSortedScores(obj);
+                if (!scores.isEmpty()) {
+                    System.out.println("=== SIDEBAR DEBUG ===");
+                    System.out.println("TITLE: " + obj.getDisplayName());
 
-                for (Score score : sb.getSortedScores(obj)) {
-                    String entry = score.getPlayerName();
-                    ScorePlayerTeam team = sb.getPlayersTeam(entry);
+                    for (Score score : scores) {
+                        String entry = score.getPlayerName();
+                        ScorePlayerTeam team = sb.getPlayersTeam(entry);
 
-                    String prefix = (team != null) ? team.getColorPrefix() : "";
-                    String suffix = (team != null) ? team.getColorSuffix() : "";
+                        String prefix = (team != null) ? team.getColorPrefix() : "";
+                        String suffix = (team != null) ? team.getColorSuffix() : "";
 
-                    String rendered = ScorePlayerTeam.formatPlayerName(team, entry);
+                        String rendered = ScorePlayerTeam.formatPlayerName(team, entry);
 
-                    System.out.println(
-                            "[" + prefix + "] | [" + entry + "] | [" + suffix + "]"
-                                    + "  ->  " + rendered
-                    );
+                        System.out.println(
+                                "[" + prefix + "] | [" + entry + "] | [" + suffix + "]"
+                                        + "  ->  " + rendered
+                        );
+                    }
+
+                    printed = true;
                 }
-
-                printed = true;
             }
         }
     }
