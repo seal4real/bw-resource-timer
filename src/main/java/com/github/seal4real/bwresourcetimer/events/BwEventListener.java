@@ -1,14 +1,9 @@
 package com.github.seal4real.bwresourcetimer.events;
 
 import com.github.seal4real.bwresourcetimer.game.GameState;
-import java.util.Collection;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
-import net.minecraft.scoreboard.Score;
-import net.minecraft.scoreboard.ScoreObjective;
-import net.minecraft.scoreboard.ScorePlayerTeam;
-import net.minecraft.scoreboard.Scoreboard;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,6 +20,8 @@ public class BwEventListener {
         // Reset GameState
         GameState.inBedwars = false;
         GameState.mode = null;
+        GameState.gameStarted = false;
+        GameState.gameStartTime = -1;
     }
 
     @SubscribeEvent
@@ -37,41 +34,20 @@ public class BwEventListener {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/locraw");
             ticks = -1;
         }
-
-        if (!printed && Minecraft.getMinecraft().theWorld != null) {
-            Scoreboard sb = Minecraft.getMinecraft().theWorld.getScoreboard();
-            ScoreObjective obj = sb.getObjectiveInDisplaySlot(1); // sidebar
-
-            if (obj != null) {
-                Collection<Score> scores = sb.getSortedScores(obj);
-                if (!scores.isEmpty()) {
-                    System.out.println("=== SIDEBAR DEBUG ===");
-                    System.out.println("TITLE: " + obj.getDisplayName());
-
-                    for (Score score : scores) {
-                        String entry = score.getPlayerName();
-                        ScorePlayerTeam team = sb.getPlayersTeam(entry);
-
-                        String prefix = (team != null) ? team.getColorPrefix() : "";
-                        String suffix = (team != null) ? team.getColorSuffix() : "";
-
-                        String rendered = ScorePlayerTeam.formatPlayerName(team, entry);
-
-                        System.out.println(
-                                "[" + prefix + "] | [" + entry + "] | [" + suffix + "]"
-                                        + "  ->  " + rendered
-                        );
-                    }
-
-                    printed = true;
-                }
-            }
-        }
     }
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         String msg = event.message.getUnformattedText();
+
+        // TODO: replace placeholder with the real Hypixel BedWars game-start message
+        if (msg.contains("GAME START PLACEHOLDER")) {
+            GameState.gameStarted = true;
+            GameState.gameStartTime = System.currentTimeMillis();
+            Minecraft.getMinecraft().thePlayer.addChatMessage(
+                new net.minecraft.util.ChatComponentText("[BwTimer] Game started! Clock running.")
+            );
+        }
 
         if (msg.startsWith("{")) {  // /locraw responses are JSON
             event.setCanceled(true); // hide it from chat

@@ -1,6 +1,7 @@
 package com.github.seal4real.bwresourcetimer;
 
 import com.github.seal4real.bwresourcetimer.events.BwEventListener;
+import com.github.seal4real.bwresourcetimer.hud.HudRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,6 +17,7 @@ public class ExampleMod {
         System.out.println("Color State: " + new GlStateManager.Color());
 
         MinecraftForge.EVENT_BUS.register(new BwEventListener());
+        MinecraftForge.EVENT_BUS.register(new HudRenderer());
 //        MinecraftForge.EVENT_BUS.register(this);
     }
 }
