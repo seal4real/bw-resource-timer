@@ -41,9 +41,6 @@ public class BwEventListener {
         // TODO: replace placeholder with the real Hypixel BedWars game-start message
         if (msg.contains("GAME START PLACEHOLDER")) {
             GameState.gameStartTime = System.currentTimeMillis();
-            Minecraft.getMinecraft().thePlayer.addChatMessage(
-                new net.minecraft.util.ChatComponentText("[BwTimer] Game started! Clock running.")
-            );
         }
 
         if (msg.startsWith("{")) {  // /locraw responses are JSON
