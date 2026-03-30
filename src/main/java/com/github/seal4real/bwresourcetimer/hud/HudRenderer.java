@@ -13,7 +13,7 @@ public class HudRenderer {
 
     @SubscribeEvent
     public void onRenderOverlay(RenderGameOverlayEvent.Text event) {
-        if (!GameState.gameStarted) return;
+        if (GameState.gameStartTime < 0) return;
 
         long elapsed = GameState.getElapsedSeconds();
         long minutes = elapsed / 60;

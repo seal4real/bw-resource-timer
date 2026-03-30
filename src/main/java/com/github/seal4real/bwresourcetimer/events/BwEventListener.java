@@ -20,7 +20,6 @@ public class BwEventListener {
         // Reset GameState
         GameState.inBedwars = false;
         GameState.mode = null;
-        GameState.gameStarted = false;
         GameState.gameStartTime = -1;
     }
 
@@ -42,7 +41,6 @@ public class BwEventListener {
 
         // TODO: replace placeholder with the real Hypixel BedWars game-start message
         if (msg.contains("GAME START PLACEHOLDER")) {
-            GameState.gameStarted = true;
             GameState.gameStartTime = System.currentTimeMillis();
             Minecraft.getMinecraft().thePlayer.addChatMessage(
                 new net.minecraft.util.ChatComponentText("[BwTimer] Game started! Clock running.")
