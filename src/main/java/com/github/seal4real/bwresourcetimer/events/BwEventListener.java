@@ -39,7 +39,7 @@ public class BwEventListener {
         String msg = event.message.getUnformattedText();
 
         // TODO: replace placeholder with the real Hypixel BedWars game-start message
-        if (msg.contains("GAME START PLACEHOLDER")) {
+        if (msg.contains("Protect your bed and destroy the enemy beds")) {
             GameState.gameStartTime = System.currentTimeMillis();
         }
 
