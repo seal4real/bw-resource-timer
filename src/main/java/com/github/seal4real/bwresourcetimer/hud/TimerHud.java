@@ -4,6 +4,7 @@ import cc.polyfrost.oneconfig.hud.TextHud;
 import com.github.seal4real.bwresourcetimer.ExampleMod;
 import com.github.seal4real.bwresourcetimer.game.GameState;
 import com.github.seal4real.bwresourcetimer.game.ResourceTimers;
+import com.github.seal4real.bwresourcetimer.game.TierSchedule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
@@ -26,12 +27,26 @@ public class TimerHud extends TextHud {
         long elapsed = GameState.getElapsedSeconds();
         long diamondSecs = ResourceTimers.secondsUntilNextSpawn(ResourceTimers.DIAMOND_TIERS, elapsed);
         long emeraldSecs = ResourceTimers.secondsUntilNextSpawn(ResourceTimers.EMERALD_TIERS, elapsed);
+        TierSchedule activeDiamondTier = ResourceTimers.getActiveTier(ResourceTimers.DIAMOND_TIERS, elapsed);
+        TierSchedule activeEmeraldTier = ResourceTimers.getActiveTier(ResourceTimers.EMERALD_TIERS, elapsed);
 
         if (ExampleMod.config.showTitle) {
             lines.add("§eResource Timer:");
         }
-        lines.add("§bDiamonds: §f" + formatTime(diamondSecs));
-        lines.add("§aEmeralds: §f" + formatTime(emeraldSecs));
+
+        String diamondsLine = "§bDiamonds: ";
+        String emeraldsLine = "§aEmeralds: ";
+
+        diamondsLine += "§7" + formatTime(diamondSecs);
+        emeraldsLine += "§7" + formatTime(emeraldSecs);
+
+        if (ExampleMod.config.showInterval) {
+            diamondsLine += "§f/" + activeDiamondTier.intervalSeconds;
+            emeraldsLine += "§f/" + activeEmeraldTier.intervalSeconds;
+        }
+
+        lines.add(diamondsLine);
+        lines.add(emeraldsLine);
     }
 
     @Override
@@ -50,8 +65,6 @@ public class TimerHud extends TextHud {
     }
 
     private String formatTime(long time) {
-        long seconds = time % 60;
-        long minutes = time / 60;
-        return String.format("%02d:%02d", minutes, seconds);
+        return String.format("%02d", time);
     }
 }

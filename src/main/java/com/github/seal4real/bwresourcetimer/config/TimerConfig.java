@@ -18,10 +18,19 @@ public class TimerConfig extends Config {
     }
 
     @Switch(
-            name = "Show Title",
-            size = OptionSize.SINGLE
+            name = "Show Title"
     )
     public boolean showTitle;
+
+    @Switch(
+            name = "Show Interval"
+    )
+    public boolean showInterval;
+
+    @Switch(
+            name = "Show Total Spawned"
+    )
+    public boolean showTotalSpawned;
 
     @HUD(name = "General")
     public static TimerHud hud = new TimerHud();

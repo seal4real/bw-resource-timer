@@ -17,15 +17,26 @@ public class ResourceTimers {
         new TierSchedule("Emerald III", 27, 1440),
     };
 
-    /** Returns seconds until the next spawn, given elapsed game seconds. */
-    public static long secondsUntilNextSpawn(TierSchedule[] tiers, long elapsedSeconds) {
+    public static TierSchedule getActiveTier(TierSchedule[] tiers, long elapsedSeconds) {
         TierSchedule active = tiers[0];
         for (TierSchedule tier : tiers) {
             if (elapsedSeconds >= tier.startsAtSecond) active = tier;
             else break;
         }
+        return active;
+    }
+
+    /** Returns seconds until the next spawn, given elapsed game seconds. */
+    public static long secondsUntilNextSpawn(TierSchedule[] tiers, long elapsedSeconds) {
+        TierSchedule active = getActiveTier(tiers, elapsedSeconds);
         long elapsedInTier = elapsedSeconds - active.startsAtSecond;
         long nextSpawn = active.startsAtSecond + (elapsedInTier / active.intervalSeconds + 1) * active.intervalSeconds;
         return nextSpawn - elapsedSeconds;
+    }
+
+    /** Returns the interval for the next spawn, given in seconds. */
+    public static long intervalNextSpawn(TierSchedule[] tiers, long elapsedSeconds) {
+        TierSchedule active = getActiveTier(tiers, elapsedSeconds);
+        return active.intervalSeconds;
     }
 }
