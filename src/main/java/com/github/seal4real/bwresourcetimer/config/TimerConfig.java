@@ -5,6 +5,7 @@ import cc.polyfrost.oneconfig.config.annotations.Color;
 import cc.polyfrost.oneconfig.config.annotations.HUD;
 import cc.polyfrost.oneconfig.config.annotations.Header;
 import cc.polyfrost.oneconfig.config.annotations.Switch;
+import cc.polyfrost.oneconfig.config.annotations.Number;
 import cc.polyfrost.oneconfig.config.core.OneColor;
 import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
@@ -36,6 +37,13 @@ public class TimerConfig extends Config {
             name = "Show Spawn Count"
     )
     public boolean showSpawnCount;
+
+    @Number(
+            name = "Low value",
+            min = 0, max = 100,
+            description = "Beneath this value the timer turns red. Set to zero if you don't want it to turn red."
+    )
+    public static int lowValue = 5; // default value
 
     @HUD(name = "General")
     public static TimerHud hud = new TimerHud();

@@ -2,6 +2,7 @@ package com.github.seal4real.bwresourcetimer.hud;
 
 import cc.polyfrost.oneconfig.hud.TextHud;
 import com.github.seal4real.bwresourcetimer.ExampleMod;
+import com.github.seal4real.bwresourcetimer.config.TimerConfig;
 import com.github.seal4real.bwresourcetimer.game.GameState;
 import com.github.seal4real.bwresourcetimer.game.ResourceTimers;
 import com.github.seal4real.bwresourcetimer.game.TierSchedule;
@@ -47,8 +48,8 @@ public class TimerHud extends TextHud {
             emeraldsLine += " " + activeEmeraldTier.tierLabel;
         }
 
-        diamondsLine += ": §7" + formatTime(diamondSecs);
-        emeraldsLine += ": §7" + formatTime(emeraldSecs);
+        diamondsLine += ((diamondSecs <= TimerConfig.lowValue) ? ": §c" : ": §7") + formatTime(diamondSecs);
+        emeraldsLine += ((emeraldSecs <= TimerConfig.lowValue) ? ": §c" : ": §7") + formatTime(emeraldSecs);
 
         if (ExampleMod.config.showInterval) {
             diamondsLine += "§f/" + activeDiamondTier.intervalSeconds;
