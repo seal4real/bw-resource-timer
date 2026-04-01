@@ -32,6 +32,11 @@ public class TimerConfig extends Config {
     )
     public boolean showTierLabel;
 
+    @Switch(
+            name = "Show Spawn Count"
+    )
+    public boolean showSpawnCount;
+
     @HUD(name = "General")
     public static TimerHud hud = new TimerHud();
 }

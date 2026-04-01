@@ -29,8 +29,23 @@ public class ResourceTimers {
     /** Returns seconds until the next spawn, given elapsed game seconds and active tier. */
     public static long secondsUntilNextSpawn(TierSchedule active, long elapsedSeconds) {
         long elapsedInTier = elapsedSeconds - active.startsAtSecond;
+        // Integer division floors to the last completed interval; +1 advances to the next one.
         long nextSpawn = active.startsAtSecond + (elapsedInTier / active.intervalSeconds + 1) * active.intervalSeconds;
         return nextSpawn - elapsedSeconds;
+    }
+
+    public static long spawnCount(TierSchedule[] tiers, long elapsedSeconds) {
+        long count = 0;
+        for (int i = 0; i < tiers.length; i++) {
+            TierSchedule tier = tiers[i];
+            if (elapsedSeconds < tier.startsAtSecond) break;
+
+            // Cap tierEnd at the next tier's start (or now if we're in the last tier)
+            long tierEnd = (i + 1 < tiers.length) ? tiers[i + 1].startsAtSecond : elapsedSeconds;
+            long tierDuration = Math.min(elapsedSeconds, tierEnd) - tier.startsAtSecond;
+            count += tierDuration / tier.intervalSeconds;
+        }
+        return count;
     }
 
 }

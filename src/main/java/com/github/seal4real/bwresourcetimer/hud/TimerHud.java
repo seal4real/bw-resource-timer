@@ -50,6 +50,13 @@ public class TimerHud extends TextHud {
             emeraldsLine += "§f/" + activeEmeraldTier.intervalSeconds;
         }
 
+        if (ExampleMod.config.showSpawnCount) {
+            long diamondSpawnCount = ResourceTimers.spawnCount(ResourceTimers.DIAMOND_TIERS, elapsed);
+            long emeraldSpawnCount = ResourceTimers.spawnCount(ResourceTimers.EMERALD_TIERS, elapsed);
+            diamondsLine += " §7(" + String.format("%d", diamondSpawnCount) + ")";
+            emeraldsLine += " §7(" + String.format("%d", emeraldSpawnCount) + ")";
+        }
+
         lines.add(diamondsLine);
         lines.add(emeraldsLine);
     }
