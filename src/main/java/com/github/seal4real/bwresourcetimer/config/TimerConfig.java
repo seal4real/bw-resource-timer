@@ -28,6 +28,11 @@ public class TimerConfig extends Config {
     public boolean showInterval;
 
     @Switch(
+            name = "Show Interval"
+    )
+    public boolean showTierLabel;
+
+    @Switch(
             name = "Show Total Spawned"
     )
     public boolean showTotalSpawned;

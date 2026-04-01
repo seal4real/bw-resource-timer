@@ -25,20 +25,25 @@ public class TimerHud extends TextHud {
         if (GameState.gameStartTime < 0) return;
 
         long elapsed = GameState.getElapsedSeconds();
-        long diamondSecs = ResourceTimers.secondsUntilNextSpawn(ResourceTimers.DIAMOND_TIERS, elapsed);
-        long emeraldSecs = ResourceTimers.secondsUntilNextSpawn(ResourceTimers.EMERALD_TIERS, elapsed);
         TierSchedule activeDiamondTier = ResourceTimers.getActiveTier(ResourceTimers.DIAMOND_TIERS, elapsed);
         TierSchedule activeEmeraldTier = ResourceTimers.getActiveTier(ResourceTimers.EMERALD_TIERS, elapsed);
+        long diamondSecs = ResourceTimers.secondsUntilNextSpawn(activeDiamondTier, elapsed);
+        long emeraldSecs = ResourceTimers.secondsUntilNextSpawn(activeEmeraldTier, elapsed);
 
         if (ExampleMod.config.showTitle) {
             lines.add("§eResource Timer:");
         }
 
-        String diamondsLine = "§bDiamonds: ";
-        String emeraldsLine = "§aEmeralds: ";
+        String diamondsLine = "§bDiamonds";
+        String emeraldsLine = "§aEmeralds";
 
-        diamondsLine += "§7" + formatTime(diamondSecs);
-        emeraldsLine += "§7" + formatTime(emeraldSecs);
+        if (ExampleMod.config.showTierLabel) {
+            diamondsLine += " " + activeDiamondTier.tierLabel;
+            emeraldsLine += " " + activeEmeraldTier.tierLabel;
+        }
+
+        diamondsLine += ": §7" + formatTime(diamondSecs);
+        emeraldsLine += ": §7" + formatTime(emeraldSecs);
 
         if (ExampleMod.config.showInterval) {
             diamondsLine += "§f/" + activeDiamondTier.intervalSeconds;
