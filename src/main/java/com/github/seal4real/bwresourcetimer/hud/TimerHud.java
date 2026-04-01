@@ -36,14 +36,14 @@ public class TimerHud extends TextHud {
         long diamondSecs = ResourceTimers.secondsUntilNextSpawn(activeDiamondTier, elapsed);
         long emeraldSecs = ResourceTimers.secondsUntilNextSpawn(activeEmeraldTier, elapsed);
 
-        if (ExampleMod.config.showTitle) {
+        if (TimerConfig.showTitle) {
             lines.add("§eResource Timer:");
         }
 
         String diamondsLine = "§bDiamonds";
         String emeraldsLine = "§aEmeralds";
 
-        if (ExampleMod.config.showTierLabel) {
+        if (TimerConfig.showTierLabel) {
             diamondsLine += " " + activeDiamondTier.tierLabel;
             emeraldsLine += " " + activeEmeraldTier.tierLabel;
         }
@@ -51,12 +51,12 @@ public class TimerHud extends TextHud {
         diamondsLine += ((diamondSecs <= TimerConfig.lowValue) ? ": §c" : ": §7") + formatTime(diamondSecs);
         emeraldsLine += ((emeraldSecs <= TimerConfig.lowValue) ? ": §c" : ": §7") + formatTime(emeraldSecs);
 
-        if (ExampleMod.config.showInterval) {
+        if (TimerConfig.showInterval) {
             diamondsLine += "§f/" + activeDiamondTier.intervalSeconds;
             emeraldsLine += "§f/" + activeEmeraldTier.intervalSeconds;
         }
 
-        if (ExampleMod.config.showSpawnCount) {
+        if (TimerConfig.showSpawnCount) {
             long diamondSpawnCount = ResourceTimers.spawnCount(ResourceTimers.DIAMOND_TIERS, elapsed) + 1; // One diamond spawns at start of game
             long emeraldSpawnCount = ResourceTimers.spawnCount(ResourceTimers.EMERALD_TIERS, elapsed);
             diamondsLine += " §7(" + String.format("%d", diamondSpawnCount) + ")";

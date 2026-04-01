@@ -21,22 +21,22 @@ public class TimerConfig extends Config {
     @Switch(
             name = "Show Title"
     )
-    public boolean showTitle;
+    public static boolean showTitle;
 
     @Switch(
             name = "Show Interval"
     )
-    public boolean showInterval;
+    public static boolean showInterval;
 
     @Switch(
             name = "Show Tier Label"
     )
-    public boolean showTierLabel;
+    public static boolean showTierLabel;
 
     @Switch(
             name = "Show Spawn Count"
     )
-    public boolean showSpawnCount;
+    public static boolean showSpawnCount;
 
     @Number(
             name = "Low value",
