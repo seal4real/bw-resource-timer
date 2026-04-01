@@ -29,6 +29,7 @@ loom {
         "client" {
             // If you don't want mixins, remove these lines
             property("mixin.debug", "true")
+            arg("--tweakClass", "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
             arg("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
         }
     }
@@ -37,6 +38,8 @@ loom {
             if (SystemUtils.IS_OS_MAC_OSX) {
                 // This argument causes a crash on macOS
                 vmArgs.remove("-XstartOnFirstThread")
+                // OneConfig's blur shader crashes Apple's Metal OpenGL renderer in dev
+                vmArgs.add("-Dorg.lwjgl.opengl.Display.allowSoftwareOpenGL=true")
             }
         }
         remove(getByName("server"))
@@ -65,6 +68,7 @@ sourceSets.main {
 repositories {
     mavenCentral()
     maven("https://repo.spongepowered.org/maven/")
+    maven("https://repo.polyfrost.cc/releases")
     // If you don't want to log in with your real minecraft account, remove this line
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
 }
@@ -87,6 +91,9 @@ dependencies {
     // If you don't want to log in with your real minecraft account, remove this line
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.1")
 
+    compileOnly("cc.polyfrost:oneconfig-1.8.9-forge:0.2.2-alpha+")
+    shadowImpl("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta+")
+
 }
 
 // Tasks:
@@ -102,8 +109,10 @@ tasks.withType(org.gradle.jvm.tasks.Jar::class) {
         this["ForceLoadAsMod"] = "true"
 
         // If you don't want mixins, remove these lines
-        this["TweakClass"] = "org.spongepowered.asm.launch.MixinTweaker"
+        this["TweakClass"] = "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker"
         this["MixinConfigs"] = "mixins.$modid.json"
+        this["TweakOrder"] = "0"
+        this["ModSide"] = "CLIENT"
 	    if (transformerFile.exists())
 			this["FMLAT"] = "${modid}_at.cfg"
     }

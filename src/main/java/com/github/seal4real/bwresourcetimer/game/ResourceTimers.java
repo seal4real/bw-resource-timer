@@ -11,10 +11,10 @@ public class ResourceTimers {
     // Phantom "initial" entry absorbs the 86s first-spawn delay.
     // Emerald I then takes over at second 86 with the standard 55s interval.
     public static final TierSchedule[] EMERALD_TIERS = {
-        new TierSchedule("Emerald (initial)", 86,    0),
-        new TierSchedule("Emerald I",         55,   86),
-        new TierSchedule("Emerald II",        40,  720),
-        new TierSchedule("Emerald III",       27, 1440),
+        new TierSchedule("Emerald N",   86,    0),
+        new TierSchedule("Emerald I",   55,   86),
+        new TierSchedule("Emerald II",  40,  720),
+        new TierSchedule("Emerald III", 27, 1440),
     };
 
     /** Returns seconds until the next spawn, given elapsed game seconds. */
