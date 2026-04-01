@@ -33,9 +33,4 @@ public class ResourceTimers {
         return nextSpawn - elapsedSeconds;
     }
 
-    /** Returns the interval for the next spawn, given in seconds. */
-    public static long intervalNextSpawn(TierSchedule[] tiers, long elapsedSeconds) {
-        TierSchedule active = getActiveTier(tiers, elapsedSeconds);
-        return active.intervalSeconds;
-    }
 }
