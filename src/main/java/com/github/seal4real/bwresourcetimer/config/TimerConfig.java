@@ -28,14 +28,9 @@ public class TimerConfig extends Config {
     public boolean showInterval;
 
     @Switch(
-            name = "Show Interval"
+            name = "Show Tier Label"
     )
     public boolean showTierLabel;
-
-    @Switch(
-            name = "Show Total Spawned"
-    )
-    public boolean showTotalSpawned;
 
     @HUD(name = "General")
     public static TimerHud hud = new TimerHud();

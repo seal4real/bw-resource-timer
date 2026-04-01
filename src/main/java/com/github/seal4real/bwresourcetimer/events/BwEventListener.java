@@ -27,11 +27,7 @@ public class BwEventListener {
         if (info == null) return;
 
         GameState.inBedwars = info.getGameType() == LocrawInfo.GameType.BEDWARS;
-
         GameState.mode = info.getGameMode();
-
-        System.out.println("Game type: " + info.getGameType());
-        System.out.println("Mode: " + info.getGameMode());
     }
 
     @Subscribe
