@@ -19,31 +19,38 @@ public class TimerConfig extends Config {
     }
 
     @Switch(
-            name = "Show Title"
+            name = "Show Title",
+            description = "Show a 'Resource Timer:' heading above the diamond and emerald lines.",
+            size = OptionSize.DUAL
     )
     public static boolean showTitle;
 
     @Switch(
-            name = "Show Interval"
+            name = "Show Interval",
+            size = OptionSize.DUAL
     )
     public static boolean showInterval;
 
     @Switch(
-            name = "Show Tier Label"
+            name = "Show Tier Label",
+            description = "Append the current tier (e.g. 'II') to each resource line.",
+            size = OptionSize.DUAL
     )
     public static boolean showTierLabel;
 
     @Switch(
-            name = "Show Spawn Count"
+            name = "Show Spawn Count",
+            description = "Append a running total of how many times each resource has spawned this game (e.g. '(12)').",
+            size = OptionSize.DUAL
     )
     public static boolean showSpawnCount;
 
     @Number(
-            name = "Low value",
+            name = "Low Timer Warning",
             min = 0, max = 100,
-            description = "Beneath this value the timer turns red. Set to zero if you don't want it to turn red."
+            description = "When the countdown reaches this many seconds the timer turns red. Set to 0 to disable."
     )
-    public static int lowValue = 5; // default value
+    public static int lowValue = 5;
 
     @HUD(name = "General")
     public static TimerHud hud = new TimerHud();
