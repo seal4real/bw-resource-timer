@@ -22,9 +22,14 @@ public class TimerHud extends TextHud {
 
     @Override
     protected void getLines(List<String> lines, boolean example) {
-        if (GameState.gameStartTime < 0) return;
+        long elapsed;
+        if (example) {
+            elapsed = 500; // fake example time
+        } else {
+            if (GameState.gameStartTime < 0) return;
+            elapsed = GameState.getElapsedSeconds();
+        }
 
-        long elapsed = GameState.getElapsedSeconds();
         TierSchedule activeDiamondTier = ResourceTimers.getActiveTier(ResourceTimers.DIAMOND_TIERS, elapsed);
         TierSchedule activeEmeraldTier = ResourceTimers.getActiveTier(ResourceTimers.EMERALD_TIERS, elapsed);
         long diamondSecs = ResourceTimers.secondsUntilNextSpawn(activeDiamondTier, elapsed);
@@ -51,7 +56,7 @@ public class TimerHud extends TextHud {
         }
 
         if (ExampleMod.config.showSpawnCount) {
-            long diamondSpawnCount = ResourceTimers.spawnCount(ResourceTimers.DIAMOND_TIERS, elapsed);
+            long diamondSpawnCount = ResourceTimers.spawnCount(ResourceTimers.DIAMOND_TIERS, elapsed) + 1; // One diamond spawns at start of game
             long emeraldSpawnCount = ResourceTimers.spawnCount(ResourceTimers.EMERALD_TIERS, elapsed);
             diamondsLine += " §7(" + String.format("%d", diamondSpawnCount) + ")";
             emeraldsLine += " §7(" + String.format("%d", emeraldSpawnCount) + ")";
