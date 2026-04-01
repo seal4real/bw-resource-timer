@@ -25,8 +25,7 @@ public class ResourceTimers {
             else break;
         }
         long elapsedInTier = elapsedSeconds - active.startsAtSecond;
-        long nextSpawn = active.startsAtSecond
-                + (elapsedInTier / active.intervalSeconds + 1) * active.intervalSeconds;
+        long nextSpawn = active.startsAtSecond + (elapsedInTier / active.intervalSeconds + 1) * active.intervalSeconds;
         return nextSpawn - elapsedSeconds;
     }
 }

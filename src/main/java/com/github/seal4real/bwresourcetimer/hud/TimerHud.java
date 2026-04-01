@@ -21,6 +21,8 @@ public class TimerHud extends TextHud {
 
     @Override
     protected void getLines(List<String> lines, boolean example) {
+        if (GameState.gameStartTime < 0) return;
+
         long elapsed = GameState.getElapsedSeconds();
         long diamondSecs = ResourceTimers.secondsUntilNextSpawn(ResourceTimers.DIAMOND_TIERS, elapsed);
         long emeraldSecs = ResourceTimers.secondsUntilNextSpawn(ResourceTimers.EMERALD_TIERS, elapsed);
