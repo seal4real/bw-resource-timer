@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 @Mod(modid = "bwresourcetimer", useMetadata=true)
-public class ExampleMod {
+public class BwResourceTimer {
     public static TimerConfig config;
 
     @Mod.EventHandler

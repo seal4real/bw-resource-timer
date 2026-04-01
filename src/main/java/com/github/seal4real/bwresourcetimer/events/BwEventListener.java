@@ -34,8 +34,7 @@ public class BwEventListener {
     public void onChat(ChatReceiveEvent event) {
         String msg = event.getFullyUnformattedMessage();
 
-        // TODO: with the actual BedWars start message
-        if (msg.contains("GAME START PLACEHOLDER")) {
+        if (msg.contains("Protect your bed")) {
             GameState.gameStartTime = System.currentTimeMillis();
         }
     }
